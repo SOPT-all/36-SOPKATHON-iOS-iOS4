@@ -29,18 +29,17 @@ import Moya
  ```
  */
 
-final class ExampleService {
-    
-    static let shared = ExampleModel()
+final class ExampleService {        
     
     // Provider에 사용하려는 API를 제네릭으로 넘겨주세요
-    let provider = MoyaProvider<ExampleAPI>()
+    private let provider = MoyaProvider<ExampleAPI>()
     
-    func exmapleRequest() async {
+    func exmapleRequest() async throws -> [Post] {
         do {
-            try await provider.async.requestPlain(.exampleRequest)
+            let result: [Post] = try await provider.async.request(.exampleRequest)
+            return result
         } catch {
-            print(error.localizedDescription)
+            throw APIError.unknownError
         }
     }
 }

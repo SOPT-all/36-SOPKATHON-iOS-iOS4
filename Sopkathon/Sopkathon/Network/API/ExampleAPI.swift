@@ -27,14 +27,14 @@ enum ExampleAPI: TargetType {
     
     // 기본 URL
     var baseURL: URL {
-        return URL(string: "BaseURL")!
+        return URL(string: "https://jsonplaceholder.typicode.com")!
     }
     
     // URL에 추가될 path
     var path: String {
         switch self {
         case .exampleRequest:
-            return "path"
+            return "/posts"
         }
     }
     
@@ -75,4 +75,4 @@ enum ExampleAPI: TargetType {
     }
 }
 
-struct ExampleModel: Encodable {}
+
