@@ -21,6 +21,9 @@ final class MypageViewController: UIViewController {
     private var myActivityLabel = UILabel()
     private var suggestLabel = UILabel()
     
+    private let tableView = UITableView(frame: .zero, style: .plain)
+    private var recruitList: [Activity] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +31,7 @@ final class MypageViewController: UIViewController {
         setStyle()
         setUI()
         setLayout()
+        setDelegate()
         fetchMypageData()
     }
     
@@ -54,6 +58,8 @@ final class MypageViewController: UIViewController {
             $0.text = "이름"
             $0.textColor = .black
             $0.font = .head_sb_16
+            $0.numberOfLines = 2
+            $0.textAlignment = .center
         }
         
         phoneNumberLabel.do {
@@ -73,10 +79,17 @@ final class MypageViewController: UIViewController {
             $0.textColor = .gray500
             $0.font = .body_rg_14
         }
+        
+        tableView.do {
+            $0.separatorStyle = .none
+            $0.showsVerticalScrollIndicator = false
+            $0.register(MypageRecruitListCell.self, forCellReuseIdentifier: MypageRecruitListCell.identifier)
+            $0.backgroundColor = .clear
+        }
     }
     
     private func setUI() {
-        view.addSubviews(topBackgroundView, logoHeader, myActivityLabel, suggestLabel)
+        view.addSubviews(topBackgroundView, logoHeader, myActivityLabel, suggestLabel, tableView)
         topBackgroundView.addSubviews(profileBackgroundView, nameLabel, phoneNumberLabel)
         profileBackgroundView.addSubview(profileImageView)
     }
@@ -124,6 +137,17 @@ final class MypageViewController: UIViewController {
             $0.top.equalTo(myActivityLabel.snp.bottom).offset(8)
             $0.leading.equalToSuperview().offset(16)
         }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(suggestLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(20)
+        }
+    }
+    
+    private func setDelegate() {
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func fetchMypageData() {
@@ -133,11 +157,18 @@ final class MypageViewController: UIViewController {
             
             switch result {
             case .success(let responseModel):
-                if let firstActivity = responseModel.data.participationCompleteActivities.first {
-                        self.nameLabel.text = "\(firstActivity.userId)번 user"
+                let activities = responseModel.data.participationCompleteActivities
+                if let firstActivity = activities.first {
+                    DispatchQueue.main.async {
+                        self.nameLabel.text = "\(firstActivity.userId)번 user \n @farmer_student"
                         self.phoneNumberLabel.text = self.formatPhoneNumber(firstActivity.telephone)
-                } else {
-                    print("참여 완료 활동이 없습니다.")
+                    }
+                }
+                
+                self.recruitList = activities
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
                 }
                 
             case .failure(let error):
@@ -163,5 +194,27 @@ final class MypageViewController: UIViewController {
         default:
             return phoneNumber
         }
+    }
+}
+
+extension MypageViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 151
+    }
+}
+
+extension MypageViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return recruitList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MypageRecruitListCell.identifier, for: indexPath) as? MypageRecruitListCell else {
+            return UITableViewCell()
+        }
+        
+        let activity = recruitList[indexPath.row]
+        cell.dataBind(activity: activity)
+        return cell
     }
 }
