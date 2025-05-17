@@ -17,7 +17,7 @@ final class RecruitDetailViewController: UIViewController {
     // MARK: - Properties
     private let postId: String
     private let recruitDetailService = RecruitDetailService.shared
-    
+    private let recruitRequestService = RecruitRequestService.shared
     // Constants
     let horizontalPadding = 16
     
@@ -47,7 +47,7 @@ final class RecruitDetailViewController: UIViewController {
     }
     
     private let recuritInfoTitleLabel = UILabel().then {
-        $0.text = "진천 꿀옥수수 수확 도와줄 친구 구합니다!dddddddddddddddddddddddddd"
+        $0.text = " "
         $0.font = .head_sb_16
         $0.textColor = .black
         $0.numberOfLines = 2
@@ -55,20 +55,20 @@ final class RecruitDetailViewController: UIViewController {
     }
     
     private let recuritInfoDateLabel = UILabel().then {
-        $0.text = "3/30~4/3(2박 3일)"
         $0.font = .body_rg_12
+        $0.text = "5/27 ~ 5/29"
     }
     private let guestLabel = UILabel().then {
-        $0.text = "3/30명"
         $0.font = .body_rg_12
+        $0.text = " "
     }
     private let recuritInfoLoactionLabel = UILabel().then {
-        $0.text = "제천"
         $0.font = .body_rg_12
+        $0.text = " "
     }
     private let recurithostAndAddmissionLabel = UILabel().then {
-        $0.text = "주최자-참가비"
         $0.font = .body_rg_12
+        $0.text = " "
     }
     
     private lazy var detailInfoSStack = UIStackView().then {
@@ -91,13 +91,13 @@ final class RecruitDetailViewController: UIViewController {
     
     // 설명글
     private let descriptionTextView = UILabel().then {
-        $0.text = "asdfasdfasdfdsfasdfasdfsdfsdfasdfasdfasdfasdfasdfasdfsdfsdfasdfasdfasdfasdfasdfasdfasdfasd\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n sdfasdfasdfadsfasdf \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n d      "
         $0.textColor = .gray
         $0.numberOfLines = 0
         $0.textColor = .black
     }
     
     private let buttonContainer = UIView().then {
+        $0.isUserInteractionEnabled = false
         $0.backgroundColor = .white
     }
     
@@ -111,12 +111,13 @@ final class RecruitDetailViewController: UIViewController {
         $0.setTitleColor(UIColor.primaryDark, for: .normal)
     }
     
-    private let requestButton =  UIButton().then {
+    private lazy var requestButton =  UIButton().then {
         $0.setTitle("신청하기", for: .normal)
         $0.backgroundColor = .primary
         $0.layer.cornerRadius = 8
         $0.titleLabel?.font = .head_sb_16
         $0.setTitleColor(UIColor.white, for: .normal)
+        $0.addTarget(self, action: #selector(requestButtonTapped), for: .touchUpInside)
     }
     
     init(postId: String = "1") {
@@ -154,17 +155,20 @@ extension RecruitDetailViewController {
     // Add subview
     
     func addSubViews() {
-        [goToReviewButton, requestButton].forEach {
-            buttonContainer.addSubview($0)
-        }
+//        [goToReviewButton, requestButton].forEach {
+//            buttonContainer.addSubview($0)
+//        }
         [categoryLabel, recuritInfoTitleLabel, detailInfoSStack].forEach {
             recuritInfoView.addSubview($0)
         }
+        
         [recuritInfoView, thumbnailImageView, divier, descriptionTextView].forEach {
             contentView.addSubview($0)
         }
-        contentView.addSubview(buttonContainer)
-        view.addSubview(scrollView)
+//        contentView.addSubview(buttonContainer)
+        [scrollView, requestButton, goToReviewButton].forEach {
+            view.addSubview($0)
+        }
         scrollView.addSubview(contentView)
     }
     
@@ -190,6 +194,7 @@ extension RecruitDetailViewController {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-100)
         }
         
         contentView.snp.makeConstraints {
@@ -222,22 +227,21 @@ extension RecruitDetailViewController {
             $0.top.equalTo(divier.snp.bottom).offset(24)
             $0.horizontalEdges.equalToSuperview().inset(horizontalPadding)
             $0.bottom.equalToSuperview().offset(24)
-        }
-        
-        buttonContainer.snp.makeConstraints {
-            $0.horizontalEdges.equalTo(scrollView.frameLayoutGuide).inset(horizontalPadding)
-            $0.bottom.equalTo(scrollView.frameLayoutGuide).offset(-35)
+            
         }
         
         goToReviewButton.snp.makeConstraints {
-            $0.leading.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().inset(16)
             $0.height.equalTo(54)
             $0.width.equalTo(145)
+            $0.bottom.equalToSuperview().offset(-30)
         }
         
         requestButton.snp.makeConstraints {
-            $0.trailing.top.bottom.equalToSuperview()
-            $0.leading.equalTo(goToReviewButton.snp.trailing).offset(8)
+            $0.leading.equalTo(goToReviewButton.snp.trailing).offset(10)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(54)
+            $0.bottom.equalToSuperview().offset(-30)
         }
     }
     
@@ -247,7 +251,25 @@ extension RecruitDetailViewController {
         self.recuritInfoTitleLabel.text = model.title
         self.descriptionTextView.text = model.content
         self.recurithostAndAddmissionLabel.text = model.subject + "·" +  model.participationFee
+        self.guestLabel.text = "\(model.currentParticipantCount)/\(model.maxParticipation)"
+        self.recuritInfoLoactionLabel.text = model.activityRegion
         self.subject = model.subject
+    }
+}
+
+// MARK: - UI Action
+
+extension RecruitDetailViewController {
+    @objc private func requestButtonTapped() {
+        print("ghihihihi")
+        Task {
+            do {
+              try await recruitRequestService.requestRecruit(postId: self.postId)
+                print("성공")
+            } catch {
+                print("실패")
+            }
+        }
     }
 }
 

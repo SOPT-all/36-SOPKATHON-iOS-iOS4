@@ -23,5 +23,8 @@ struct RecruitDetailResponseModel: Codable {
     let endTime: String
     let tag: String
     let imageUrl: String?
+    let activityRegion: String
+    let currentParticipantCount: Int
+    let maxParticipation: Int
 }
 
