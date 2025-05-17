@@ -1,7 +1,7 @@
 ---
-name: "[TYPE] ~ 구현"
+name: Issue Template
 about: 이슈템플릿입니다
-title: ''
+title: "[TYPE] ~ 구현"
 labels: ''
 assignees: ''
 
