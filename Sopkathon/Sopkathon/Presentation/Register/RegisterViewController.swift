@@ -27,9 +27,10 @@ final class RegisterViewController: UIViewController {
     private func createTypeButton(title: String) -> UIButton {
         return UIButton().then {
             $0.setTitle(title, for: .normal)
-            $0.setTitleColor(UIColor(red: 0.104, green: 0.104, blue: 0.104, alpha: 1), for: .normal)
-            $0.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-            $0.layer.borderColor = UIColor(red: 0.173, green: 0.71, blue: 0.424, alpha: 1).cgColor
+            $0.setTitleColor(.black, for: .normal)
+            $0.titleLabel?.font = .head_rg_16
+            $0.backgroundColor = .white
+            $0.layer.borderColor = UIColor.primary.cgColor
             $0.layer.borderWidth = 1
             $0.layer.cornerRadius = 5
         }
@@ -40,18 +41,18 @@ final class RegisterViewController: UIViewController {
             $0.placeholder = placeholder
             $0.textColor = .black
             $0.borderStyle = .none
-            $0.font = .systemFont(ofSize: 16)
+            $0.font = .body_rg_16
             
             $0.attributedPlaceholder = NSAttributedString(
                 string: placeholder,
                 attributes: [
-                    .foregroundColor: UIColor(red: 0.738, green: 0.738, blue: 0.738, alpha: 1)
+                    .foregroundColor: UIColor.gray300
                 ]
             )
             
             let bottomLine = CALayer()
             bottomLine.frame = CGRect(x: 0, y: 42, width: 343, height: 1)
-            bottomLine.backgroundColor = UIColor.lightGray.cgColor
+            bottomLine.backgroundColor = UIColor.gray200.cgColor
             $0.layer.addSublayer(bottomLine)
         }
     }
@@ -70,7 +71,7 @@ final class RegisterViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         
         logoImageView.do {
-            $0.image = UIImage(systemName: "person.circle")
+            $0.image = UIImage(resource: .logoWhite)
         }
         
         goToLoginButton.do {
@@ -78,8 +79,8 @@ final class RegisterViewController: UIViewController {
                 string: "로그인",
                 attributes: [
                     .underlineStyle: NSUnderlineStyle.single.rawValue,
-                    .foregroundColor: UIColor(red: 0.104, green: 0.104, blue: 0.104, alpha: 1),
-                    .font: UIFont.systemFont(ofSize: 16)
+                    .foregroundColor: UIColor.black,
+                    .font: UIFont.body_rg_16
                 ])
             $0.setAttributedTitle(underlineAttrString, for: .normal)
         }
@@ -87,10 +88,10 @@ final class RegisterViewController: UIViewController {
         registerButton.do {
             $0.setTitle("회원가입", for: .normal)
             $0.setTitleColor(.white, for: .normal)
-            $0.backgroundColor = UIColor(red: 0.173, green: 0.71, blue: 0.424, alpha: 1)
-            $0.layer.borderColor = UIColor(red: 0.173, green: 0.71, blue: 0.424, alpha: 1).cgColor
+            $0.backgroundColor = .primary
+            $0.layer.borderColor = UIColor.primary.cgColor
             $0.layer.cornerRadius = 12
-            $0.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+            $0.titleLabel?.font = .head_sb_20
         }
     }
     
@@ -112,7 +113,7 @@ final class RegisterViewController: UIViewController {
         logoImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
             $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(77)
+            $0.width.height.equalTo(118)
         }
         
         studentButton.snp.makeConstraints {
@@ -176,20 +177,16 @@ final class RegisterViewController: UIViewController {
     }
     
     private func updateButtonSelection(selectedButton: UIButton) {
-        let selectedBackgroundColor = UIColor(red: 0.838, green: 0.953, blue: 0.891, alpha: 1)
-        let selectedTextColor = UIColor(red: 0.079, green: 0.531, blue: 0.29, alpha: 1)
-        let defaultBackgroundColor = UIColor.white
-        let defaultTextColor = UIColor(red: 0.104, green: 0.104, blue: 0.104, alpha: 1)
-        
         let buttons = [studentButton, unionButton]
         
         for button in buttons {
             if button == selectedButton {
-                button.backgroundColor = selectedBackgroundColor
-                button.setTitleColor(selectedTextColor, for: .normal)
+                button.backgroundColor = .primaryLight
+                button.setTitleColor(.primaryDark, for: .normal)
+                button.titleLabel?.font = .head_sb_16
             } else {
-                button.backgroundColor = defaultBackgroundColor
-                button.setTitleColor(defaultTextColor, for: .normal)
+                button.backgroundColor = .white
+                button.setTitleColor(.black, for: .normal)
             }
         }
     }
