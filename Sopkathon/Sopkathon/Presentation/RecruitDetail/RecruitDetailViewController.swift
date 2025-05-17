@@ -30,6 +30,7 @@ final class RecruitDetailViewController: UIViewController {
         stackView.axis = .vertical
         [recuritInfoTitleLabel,
          recuritInfoDateLabel,
+         guestLabel,
          recuritInfoLoactionLabel,
          recurithostAndAddmissionLabel,
          categoryLabel].forEach {
@@ -39,11 +40,14 @@ final class RecruitDetailViewController: UIViewController {
     }
     
     private let recuritInfoTitleLabel = UILabel().then {
-        $0.text = "제목"
+        $0.text = "제목ddddddddddddddddddddd"
         $0.font = .systemFont(ofSize: 20, weight: .bold)
     }
     private let recuritInfoDateLabel = UILabel().then {
         $0.text = "3/30~4/3(2박 3일)"
+    }
+    private let guestLabel = UILabel().then {
+        $0.text = "3/30명"
     }
     private let recuritInfoLoactionLabel = UILabel().then {
         $0.text = "제천"
@@ -57,6 +61,11 @@ final class RecruitDetailViewController: UIViewController {
     
     private let thumbnailImageView = UIImageView().then {
         $0.backgroundColor = .red
+    }
+    
+    private let goToShowReviewButton = UIButton().then {
+        $0.setTitle("후기 보러 가기", for: .normal)
+        $0.backgroundColor = .gray
     }
     
     // 설명글
@@ -97,7 +106,7 @@ extension RecruitDetailViewController {
     // Add subview
     
     func addSubViews() {
-        [recuritInfoStack, thumbnailImageView, descriptionTextView].forEach {
+        [recuritInfoStack, thumbnailImageView, goToShowReviewButton, descriptionTextView].forEach {
             contentView.addSubview($0)
         }
         contentView.addSubview(requestButton)
@@ -122,19 +131,24 @@ extension RecruitDetailViewController {
         recuritInfoStack.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview().inset(10)
-            $0.trailing.equalTo(thumbnailImageView.snp.leading)
+            $0.trailing.equalTo(thumbnailImageView.snp.leading).offset(-10)
             $0.bottom.greaterThanOrEqualTo(thumbnailImageView.snp.bottom)
         }
         
         thumbnailImageView.snp.makeConstraints {
             $0.width.equalTo(161)
             $0.height.equalTo(119)
-            $0.top.equalToSuperview()
+            $0.centerY.equalTo(recuritInfoStack.snp.centerY)
             $0.trailing.equalToSuperview().inset(10)
         }
         
+        goToShowReviewButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(10)
+            $0.top.equalTo(thumbnailImageView.snp.bottom).offset(10)
+        }
+        
         descriptionTextView.snp.makeConstraints {
-            $0.top.equalTo(recuritInfoStack.snp.bottom).offset(10)
+            $0.top.equalTo(goToShowReviewButton.snp.bottom).offset(10)
             $0.horizontalEdges.equalToSuperview().inset(10)
             $0.bottom.equalToSuperview()
         }
