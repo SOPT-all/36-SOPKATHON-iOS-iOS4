@@ -14,8 +14,8 @@ final class ReviewListService {
     
     func reviewRequest(postId: String) async throws -> [ReviewListModel] {
         do {
-            let result: [ReviewListModel] = try await provider.async.request(.reviewRequest(postId: postId))
-            return result
+            let result: ReviewListWrapper = try await provider.async.request(.reviewRequest(postId: postId))
+            return result.data
         } catch {
             throw APIError.unknownError
         }
