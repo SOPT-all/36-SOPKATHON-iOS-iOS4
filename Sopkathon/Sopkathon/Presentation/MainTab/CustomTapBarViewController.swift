@@ -21,20 +21,15 @@ final class CustomTabBarVC: UITabBarController {
     func addTabItems() {
         let homeVC = UINavigationController(rootViewController: ViewController())
         let reviewVC = UINavigationController(rootViewController: ReviewListViewController(postId: "1"))
-        let myPageVC = UINavigationController(rootViewController: ViewController())
         
-        homeVC.title = "메인"
-        reviewVC.title = "후기"
-        myPageVC.title = "마이페이지"
-        
-        self.setViewControllers([homeVC, reviewVC, myPageVC], animated: false)
+        self.setViewControllers([homeVC, reviewVC], animated: false)
         self.modalPresentationStyle = .fullScreen
+        // TODO: 여기 gray를 Main으로 바꿔주세요
         self.tabBar.backgroundColor = .gray
         
         guard let items = self.tabBar.items else { return }
-        items[0].image = UIImage(systemName: "")
-        items[1].image = UIImage(named: "")
-        items[2].image = UIImage(named: "")
+        items[0].image = UIImage(resource: .homeIcon)
+        items[1].image = UIImage(resource: .myPageIcon)
     }
 }
 

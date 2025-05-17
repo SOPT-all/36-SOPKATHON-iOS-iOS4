@@ -49,7 +49,7 @@ final class ReviewListTableViewCell: UITableViewCell {
     // MARK: - SetUp Method
 
     private func setUI() {
-        [userID, starRatingLabel, date, activityTitle, activityPlace, activityContent].forEach {
+        [userID, starRatingLabel, date, activityContent].forEach {
             contentView.addSubview($0)
         }
     }
@@ -70,13 +70,8 @@ final class ReviewListTableViewCell: UITableViewCell {
             $0.trailing.equalToSuperview().offset(-10)
         }
         
-        activityPlace.snp.makeConstraints {
-            $0.top.equalTo(starRatingLabel.snp.bottom).offset(10)
-            $0.leading.equalToSuperview().offset(10)
-        }
-        
         activityContent.snp.makeConstraints {
-            $0.top.equalTo(activityPlace.snp.bottom).offset(10)
+            $0.top.equalTo(date.snp.bottom).offset(10)
             $0.leading.trailing.bottom.equalToSuperview().inset(20)
         }
     }
