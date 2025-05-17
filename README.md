@@ -1,6 +1,6 @@
 # 서비스 제목 (미정)
 
-#### 충북 지역 농가와 충북 소재 대학생들을 연결해, <br> 
+#### 충북 지역 농가와 충청도 소재 대학생들을 연결해, <br> 
 #### 단기 농촌 일손 지원 매칭 + 로컬 교류 + 체험 기반 콘텐츠까지 제공하는 서비스 입니다.
 
 	
@@ -8,7 +8,7 @@
 
 ## Developers
 
-| [이세민](https://github.com/sem-git) | [허승준](https://github.com/dev-domo) | [이나연](https://github.com/y-eonee) | [권석기](https://github.com/Seokki-Kwon)깃 |
+| [이세민](https://github.com/sem-git) | [허승준](https://github.com/dev-domo) | [이나연](https://github.com/y-eonee) | [권석기](https://github.com/Seokki-Kwon) |
 | --- | --- | --- | --- |
 | <img src="https://avatars.githubusercontent.com/u/124458036?v=4" width="250"/> | <img src="https://avatars.githubusercontent.com/u/94223526?v=4" width="250"/> | <img src="https://avatars.githubusercontent.com/u/155801470?v=4" width="250"/> | <img src="https://avatars.githubusercontent.com/u/101062450?v=4" width="250"/> |
 | <p align="center">`온보딩 & 마이페이지`<br>`회원가입 & 로그인` </p> | <p align="center">`모집 글 목록 (메인)`</p> | <p align="center">`후기 글 목록`</p> | <p align="center">`모집 글 상세보기`</p> | 
