@@ -6,33 +6,31 @@
 //
 
 import Foundation
-
 import Moya
 
 final class MypageService {
-    private let provider = MoyaProvider<MypageAPI>()
     
     static let shared = MypageService()
+    private let provider = MoyaProvider<MypageAPI>()
+    
     private init() {}
     
-    func fetchMember(id: Int, completion: @escaping (Result<Member, Error>) -> Void) {
+    func getMypage(id: Int, completion: @escaping (Result<MypageResponseModel, Error>) -> Void) {
         provider.request(.getMypage(id: id)) { result in
             switch result {
             case .success(let response):
                 do {
-                    let decoded = try JSONDecoder().decode(MypageResponseModel.self, from: response.data)
-                    if decoded.success {
-                        completion(.success(decoded.data))
-                    } else {
-                        let err = NSError(domain: "MypageService",
-                                          code: decoded.status,
-                                          userInfo: [NSLocalizedDescriptionKey: decoded.message])
-                        completion(.failure(err))
-                    }
-                } catch let error {
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    let responseModel = try decoder.decode(MypageResponseModel.self, from: response.data)
+                    completion(.success(responseModel))
+                } catch {
+                    print("\(error)")
                     completion(.failure(error))
                 }
+                
             case .failure(let error):
+                print("\(error)")
                 completion(.failure(error))
             }
         }

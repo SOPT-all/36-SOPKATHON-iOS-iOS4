@@ -5,17 +5,25 @@
 //  Created by 이세민 on 5/18/25.
 //
 
-// 수정될 예정
 struct MypageResponseModel: Decodable {
     let success: Bool
     let status: Int
     let message: String
-    let data: Member
+    let data: MypageData
 }
 
-struct Member: Decodable {
-    let id: Int
-    let username: String
+struct MypageData: Decodable {
+    let applicationCompleteActivities: [Activity]
+    let participationCompleteActivities: [Activity]
+}
+
+struct Activity: Decodable {
+    let activityId: Int
+    let title: String
+    let region: String
+    let startTime: String
+    let endTime: String
+    let userId: Int
     let telephone: String
-    let role: String
+    let imageUrl: String?
 }
