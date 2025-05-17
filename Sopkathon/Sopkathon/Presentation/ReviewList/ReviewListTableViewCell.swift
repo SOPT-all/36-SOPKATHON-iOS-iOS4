@@ -30,14 +30,6 @@ final class ReviewListTableViewCell: UITableViewCell {
 //
 //    }
     
-    private let activityTitle = UILabel()
-    
-//    private let placeImage = UIImage().then {
-//
-//    }
-    
-    private let activityPlace = UILabel()
-    
     private let activityContent = UILabel().then {
         $0.numberOfLines = 0
         $0.lineBreakMode = .byWordWrapping

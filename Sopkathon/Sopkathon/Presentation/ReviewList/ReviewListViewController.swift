@@ -14,27 +14,11 @@ final class ReviewListViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let reviewsList = ReviewListModel.dummy()
+    private var reviewsList: [ReviewListModel] = []
     private let reviewListApi = ReviewListService()
     private let postId: String
     
     // MARK: - UI Components
-    
-//    private let reviewTitleLabel = UILabel().then {
-//        $0.text = "후기"
-//    }
-//    
-//    private let agricultureFilter = UIButton().then {
-//        $0.setTitle("농활", for: .normal)
-//        $0.setTitleColor(.black, for: .normal)
-//        $0.backgroundColor = .gray
-//    }
-//    
-//    private let farmingFilter = UIButton().then {
-//        $0.setTitle("축산업", for: .normal)
-//        $0.setTitleColor(.black, for: .normal)
-//        $0.backgroundColor = .gray
-//    }
     
     private let listTableView = UITableView()
     
@@ -66,24 +50,7 @@ final class ReviewListViewController: UIViewController {
         }
     }
     
-    private func setLayout() {
-//        reviewTitleLabel.snp.makeConstraints {
-//            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
-//            $0.leading.equalToSuperview().inset(20)
-//        }
-//        
-//        agricultureFilter.snp.makeConstraints {
-//            $0.top.equalTo(reviewTitleLabel.snp.bottom).offset(15)
-//            $0.leading.equalToSuperview().inset(20)
-//            $0.height.equalTo(25)
-//        }
-//        
-//        farmingFilter.snp.makeConstraints {
-//            $0.top.equalTo(reviewTitleLabel.snp.bottom).offset(15)
-//            $0.leading.equalTo(agricultureFilter.snp.trailing).offset(20)
-//            $0.height.equalTo(25)
-//        }
-        
+    private func setLayout() {        
         listTableView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.leading.trailing.bottom.equalToSuperview().inset(20)
@@ -98,7 +65,7 @@ final class ReviewListViewController: UIViewController {
     
     private func getReviewList() {
         Task {
-            try await reviewListApi.reviewRequest(postId: postId) //reviewList 배열 리턴
+            reviewsList = try await reviewListApi.reviewRequest(postId: postId)
         }
     }
     
