@@ -16,7 +16,7 @@ final class RecruitListCell: UITableViewCell {
     private let recruitInfoStackView = UIStackView()
     private let recruitImageView = UIImageView()
     
-    static var identifier = "RecruitListCell"
+    static let identifier = "RecruitListCell"
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,23 +35,23 @@ final class RecruitListCell: UITableViewCell {
         
         bottomView.do {
             $0.backgroundColor = .white
-            $0.layer.borderColor = UIColor.gray.cgColor
+            $0.layer.borderColor = UIColor.gray100.cgColor
             $0.layer.borderWidth = 1
             $0.layer.cornerRadius = 4
         }
         
         titleLabel.do {
-            $0.font = .systemFont(ofSize: 17, weight: .bold)
+            $0.font = .head_sb_14
             $0.textColor = .black
         }
         
         dateImageView.do {
             $0.contentMode = .scaleAspectFit
-            $0.image = UIImage(systemName: "eraser")
+            $0.image = .icCalendar
         }
         
         dateLabel.do {
-            $0.font = .systemFont(ofSize: 14, weight: .medium)
+            $0.font = .body_rg_12
             $0.textColor = .black
         }
         
@@ -62,11 +62,11 @@ final class RecruitListCell: UITableViewCell {
         
         locationImageView.do {
             $0.contentMode = .scaleAspectFit
-            $0.image = UIImage(systemName: "eraser")
+            $0.image = .icLocation
         }
         
         locationNameLabel.do {
-            $0.font = .systemFont(ofSize: 14, weight: .regular)
+            $0.font = .body_rg_12
             $0.textColor = .black
         }
         
@@ -76,28 +76,25 @@ final class RecruitListCell: UITableViewCell {
         }
         
         openerAndFeeLabel.do {
-            $0.font = .systemFont(ofSize: 14, weight: .regular)
+            $0.font = .body_rg_12
             $0.textColor = .black
         }
         
         filterLabel.do {
-            $0.font = .systemFont(ofSize: 14, weight: .medium)
-            $0.textColor = .green
-            $0.backgroundColor = .systemGreen
+            $0.font = .cap_md_10
+            $0.textColor = .primaryDark
+            $0.backgroundColor = .primaryLight
             $0.textAlignment = .center
-            $0.setContentHuggingPriority(.required, for: .horizontal)
-            $0.setContentCompressionResistancePriority(.required, for: .horizontal)
         }
         
         recruitInfoStackView.do {
             $0.axis = .vertical
-            $0.spacing = 4
+            $0.spacing = 5
         }
         
         recruitImageView.do {
-            $0.contentMode = .scaleAspectFit
-            $0.layer.cornerRadius = 3
-            $0.image = UIImage(systemName: "eraser")
+            $0.contentMode = .scaleToFill
+            $0.layer.cornerRadius = 4
         }
     }
     
@@ -182,7 +179,7 @@ final class RecruitListCell: UITableViewCell {
         recruitImageView.snp.makeConstraints {
             $0.top.bottom.trailing.equalToSuperview().inset(8)
             $0.width.equalTo(72)
-            $0.height.equalTo(99)
+            $0.height.equalTo(103)
         }
         
         bottomView.snp.makeConstraints {
@@ -198,5 +195,6 @@ final class RecruitListCell: UITableViewCell {
         locationNameLabel.text = recruitItem.activityRegion
         openerAndFeeLabel.text = "\(recruitItem.opener)  ·  \(recruitItem.participationFee)원"
         filterLabel.text = recruitItem.tag
+        recruitImageView.image = UIImage(named: recruitItem.thumbnail)
     }
 }

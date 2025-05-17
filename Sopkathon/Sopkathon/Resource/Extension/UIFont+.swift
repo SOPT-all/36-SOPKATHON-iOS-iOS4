@@ -40,6 +40,10 @@ extension UIFont {
         return UIFont(name: "Pretendard-Regular", size: 14)!
     }
     
+    class var cap_md_10: UIFont {
+        return UIFont(name: "Pretendard-Medium", size: 10)!
+    }
+    
     class var cap_md_20: UIFont {
         return UIFont(name: "Pretendard-Medium", size: 20)!
     }

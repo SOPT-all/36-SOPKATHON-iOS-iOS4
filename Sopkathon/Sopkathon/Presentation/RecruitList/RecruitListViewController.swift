@@ -19,6 +19,7 @@ final class RecruitListViewController: UIViewController {
         setLayout()
         setAction()
         setDelegate()
+        setInitialSelection()
     }
     
     private func setStyle() {
@@ -27,37 +28,37 @@ final class RecruitListViewController: UIViewController {
         tableView.separatorStyle = .none
         
         logoImageView.do {
-            $0.image = UIImage(systemName: "pencil.line")
+            $0.image = .logoWhite
             $0.contentMode = .scaleAspectFit
         }
         
         agricultureButton.do {
-            $0.setTitle("농사", for: .normal)
-            $0.setTitleColor(.gray, for: .normal)
-            $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
-            $0.backgroundColor = .white
-            $0.layer.borderWidth = 2
-            $0.layer.borderColor = UIColor.gray.cgColor
+            $0.setTitle("농업", for: .normal)
+            $0.setTitleColor(.primaryDark, for: .normal)
+            $0.titleLabel?.font = .body_md_14
+            $0.backgroundColor = .primaryLight
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.primary.cgColor
             $0.layer.cornerRadius = 16
         }
         
         livestockButton.do {
             $0.setTitle("축산업", for: .normal)
-            $0.setTitleColor(.gray, for: .normal)
-            $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
+            $0.setTitleColor(.gray500, for: .normal)
+            $0.titleLabel?.font = .body_md_14
             $0.backgroundColor = .white
-            $0.layer.borderWidth = 2
-            $0.layer.borderColor = UIColor.gray.cgColor
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.gray400.cgColor
             $0.layer.cornerRadius = 16
         }
         
         excludeRecruitDeadlineButton.do {
             $0.setTitle("모집 마감 제외", for: .normal)
             $0.setTitleColor(.black, for: .normal)
-            $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
+            $0.titleLabel?.font = .body_rg_12
             $0.backgroundColor = .white
-            $0.layer.borderWidth = 2
-            $0.layer.borderColor = UIColor.gray.cgColor
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.gray200.cgColor
             $0.layer.cornerRadius = 4
         }
         
@@ -73,7 +74,8 @@ final class RecruitListViewController: UIViewController {
     
     private func setLayout() {
         logoImageView.snp.makeConstraints {
-            $0.top.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(10)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.width.height.equalTo(40)
         }
         
@@ -109,30 +111,39 @@ final class RecruitListViewController: UIViewController {
     }
     
     private func setAction() {
-        agricultureButton.addTarget(self, action: #selector(agricultureButtonDidTap), for: .touchUpInside)
-        livestockButton.addTarget(self, action: #selector(livestockButtonDidTap), for: .touchUpInside)
-    }
-    
-    @objc private func agricultureButtonDidTap() {
-        updateButtonSelection(selected: agricultureButton, deselected: livestockButton)
+        agricultureButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
+        livestockButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
     }
 
-    @objc private func livestockButtonDidTap() {
-        updateButtonSelection(selected: livestockButton, deselected: agricultureButton)
-    }
-
-    private func updateButtonSelection(selected: UIButton, deselected: UIButton) {
-        selected.do {
-            $0.layer.borderColor = UIColor.systemGreen.cgColor
-            $0.setTitleColor(.white, for: .normal)
-            $0.backgroundColor = .systemGreen
-        }
+    @objc private func filterButtonTapped(_ sender: UIButton) {
+        let otherButton = (sender == agricultureButton) ? livestockButton : agricultureButton
         
-        deselected.do {
-            $0.layer.borderColor = UIColor.lightGray.cgColor
-            $0.setTitleColor(.darkGray, for: .normal)
-            $0.backgroundColor = .white
+        let willSelect = !sender.isSelected
+        let otherSelected = otherButton.isSelected
+        
+        if !willSelect && !otherSelected { return }
+
+        sender.isSelected = willSelect
+        updateStyle(for: sender)
+    }
+
+    private func updateStyle(for button: UIButton) {
+        if button.isSelected {
+            button.layer.borderColor = UIColor.primary.cgColor
+            button.setTitleColor(.primaryDark, for: .normal)
+            button.backgroundColor = .primaryLight
+        } else {
+            button.layer.borderColor = UIColor.gray400.cgColor
+            button.setTitleColor(.gray500, for: .normal)
+            button.backgroundColor = .white
         }
+    }
+
+    private func setInitialSelection() {
+        agricultureButton.isSelected = true
+        livestockButton.isSelected = false
+        updateStyle(for: agricultureButton)
+        updateStyle(for: livestockButton)
     }
     
     private func setDelegate() {
