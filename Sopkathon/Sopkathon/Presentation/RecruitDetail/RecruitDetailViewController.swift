@@ -11,7 +11,12 @@ import SnapKit
 
 final class RecruitDetailViewController: UIViewController {
     
+    // TODO: 나연이뷰로 id랑 같이 넘겨주기
+    private var subject: String = ""
+    
     // MARK: - Properties
+    private let postId: String
+    private let recruitDetailService = RecruitDetailService.shared
     
     // Constants
     let horizontalPadding = 16
@@ -112,6 +117,16 @@ final class RecruitDetailViewController: UIViewController {
         $0.layer.cornerRadius = 8
         $0.titleLabel?.font = .head_sb_16
         $0.setTitleColor(UIColor.white, for: .normal)
+    }
+    
+    init(postId: String = "1") {
+        self.postId = postId
+        super.init(nibName: nil, bundle: nil)
+        self.fetchRecruitDetail()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -225,12 +240,30 @@ extension RecruitDetailViewController {
             $0.leading.equalTo(goToReviewButton.snp.trailing).offset(8)
         }
     }
+    
+    func configure(model: RecruitDetailResponseModel) {        
+        let tagName = model.tag == "AGRICULTURE" ? "농사" : "축산물"
+        self.categoryLabel.setTitle(tagName, for: .normal)
+        self.recuritInfoTitleLabel.text = model.title
+        self.descriptionTextView.text = model.content
+        self.recurithostAndAddmissionLabel.text = model.subject + "·" +  model.participationFee
+        self.subject = model.subject
+    }
 }
 
 // MARK: - API
 
 extension RecruitDetailViewController {
-    
+    func fetchRecruitDetail() {
+        Task {
+            do {
+                let response = try await recruitDetailService.fetchRequrestDetail(postId: self.postId)
+                configure(model: response)
+            } catch {
+//                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 #Preview {
