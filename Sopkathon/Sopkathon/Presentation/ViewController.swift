@@ -35,12 +35,14 @@ class ViewController: UIViewController {
     }
     
     @objc func requestButtonTapped() {
-        Task {
-            do {
-                let result = try await exampleService.exmapleRequest()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+//        Task {
+//            do {
+//                let result = try await exampleService.exmapleRequest()
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
+        let testViewController = TestViewController()
+        navigationController?.pushViewController(testViewController, animated: true)
     }
 }
