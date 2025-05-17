@@ -18,13 +18,13 @@ final class MypageViewController: UIViewController {
     
     private var myActivityLabel = UILabel()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setStyle()
         setUI()
         setLayout()
+        fetchMypageData()
     }
     
     private func setStyle() {
@@ -82,6 +82,24 @@ final class MypageViewController: UIViewController {
         myActivityLabel.snp.makeConstraints {
             $0.top.equalTo(phoneNumberLabel.snp.bottom).offset(60)
             $0.leading.equalToSuperview().offset(20)
+        }
+    }
+    
+    private func fetchMypageData() {
+        let userId = 5
+        
+        MypageService.shared.fetchMember(id: userId) { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let member):
+                    self.nameLabel.text = member.username
+                    self.phoneNumberLabel.text = member.telephone
+                case .failure(let error):
+                    print("마이페이지 조회 실패: \(error.localizedDescription)")
+                }
+            }
         }
     }
 }
