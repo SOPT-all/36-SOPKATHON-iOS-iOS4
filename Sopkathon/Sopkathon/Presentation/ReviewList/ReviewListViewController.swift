@@ -20,17 +20,33 @@ final class ReviewListViewController: UIViewController {
     
     // MARK: - UI Components
     
-    private let listTableView = UITableView()
+    private let navigationView = UIView()
+    
+    private let arrowIcon = UIImageView().then {
+        $0.image = .arrow
+        $0.clipsToBounds = true
+        $0.contentMode = .scaleAspectFit
+    }
+    
+    private let nameLabel = UILabel().then {
+        $0.font = .head_sb_18
+        $0.text = "업체 이름"
+        $0.textColor = .black
+    }
+    private let listTableView = UITableView().then {
+        $0.rowHeight = UITableView.automaticDimension
+    }
     
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = true
         setUI()
         setLayout()
         registerTableViewCell()
-        
+        getReviewList()
     }
     
     init(postId: String) {
@@ -45,14 +61,34 @@ final class ReviewListViewController: UIViewController {
     // MARK: - SetUp Method
     
     private func setUI() {
-        [listTableView].forEach {
+        [navigationView, listTableView].forEach {
             self.view.addSubview($0)
+        }
+        
+        [arrowIcon, nameLabel].forEach {
+            navigationView.addSubview($0)
         }
     }
     
-    private func setLayout() {        
+    private func setLayout() {
+        navigationView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
+            $0.height.equalTo(60)
+        }
+        arrowIcon.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(20)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        
+        nameLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
+        
         listTableView.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(navigationView.snp.bottom).offset(12)
             $0.leading.trailing.bottom.equalToSuperview().inset(20)
         }
     }
@@ -66,6 +102,7 @@ final class ReviewListViewController: UIViewController {
     private func getReviewList() {
         Task {
             reviewsList = try await reviewListApi.reviewRequest(postId: postId)
+            listTableView.reloadData()
         }
     }
     
