@@ -46,9 +46,11 @@ final class ReviewListViewController: UIViewController {
         setUI()
         setLayout()
         registerTableViewCell()
+
         getReviewList()
+
     }
-    
+        
     init(postId: String) {
         self.postId = postId
         super.init(nibName: nil, bundle: nil)

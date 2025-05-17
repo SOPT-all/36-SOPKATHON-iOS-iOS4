@@ -191,10 +191,28 @@ final class RecruitListCell: UITableViewCell {
     
     func dataBind(recruitItem: RecruitResponseModel) {
         titleLabel.text = recruitItem.title
-        dateLabel.text = "\(recruitItem.startTime) ~ \(recruitItem.endTime)"
-        locationNameLabel.text = recruitItem.activityRegion
-        openerAndFeeLabel.text = "\(recruitItem.opener)  ·  \(recruitItem.participationFee)원"
-        filterLabel.text = recruitItem.tag
-        recruitImageView.image = UIImage(named: recruitItem.thumbnail)
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss" // 문자열 형태에 맞게 수정
+        inputFormatter.locale = Locale(identifier: "ko_KR")
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "MM-dd"
+        outputFormatter.locale = Locale(identifier: "ko_KR")
+
+        if let startDate = inputFormatter.date(from: recruitItem.startTime),
+           let endDate = inputFormatter.date(from: recruitItem.endTime) {
+            dateLabel.text = "\(outputFormatter.string(from: startDate)) ~ \(outputFormatter.string(from: endDate))"
+        } else {
+            dateLabel.text = "날짜 오류"
+        }
+        locationNameLabel.text = recruitItem.region
+        openerAndFeeLabel.text = "\(recruitItem.subject)  ·  \(recruitItem.participationFee)원"
+        if recruitItem.tag == "AGRICULTURE" {
+            filterLabel.text = "농업"
+            recruitImageView.image = .assetApple
+        } else {
+            filterLabel.text = "목축업"
+            recruitImageView.image = .assetCorn
+        }
     }
 }

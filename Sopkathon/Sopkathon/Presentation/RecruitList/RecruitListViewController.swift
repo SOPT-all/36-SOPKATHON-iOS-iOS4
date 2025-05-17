@@ -3,7 +3,7 @@ import UIKit
 final class RecruitListViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .plain)
-    private let recruitList = RecruitResponseModel.dummy()
+    private var recruitList: [RecruitResponseModel] = []
     
     private let logoImageView = UIImageView()
     private let agricultureButton = UIButton()
@@ -20,6 +20,9 @@ final class RecruitListViewController: UIViewController {
         setAction()
         setDelegate()
         setInitialSelection()
+        
+        //fetchRecruitList()
+        fetchRecruitList(tag: "AGRICULTURE")
     }
     
     private func setStyle() {
@@ -43,7 +46,7 @@ final class RecruitListViewController: UIViewController {
         }
         
         livestockButton.do {
-            $0.setTitle("축산업", for: .normal)
+            $0.setTitle("목축업", for: .normal)
             $0.setTitleColor(.gray500, for: .normal)
             $0.titleLabel?.font = .body_md_14
             $0.backgroundColor = .white
@@ -114,19 +117,31 @@ final class RecruitListViewController: UIViewController {
         agricultureButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
         livestockButton.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
     }
-
+    
     @objc private func filterButtonTapped(_ sender: UIButton) {
-        let otherButton = (sender == agricultureButton) ? livestockButton : agricultureButton
-        
-        let willSelect = !sender.isSelected
-        let otherSelected = otherButton.isSelected
-        
-        if !willSelect && !otherSelected { return }
-
-        sender.isSelected = willSelect
-        updateStyle(for: sender)
+            let otherButton = (sender == agricultureButton) ? livestockButton : agricultureButton
+            
+            let willSelect = !sender.isSelected
+            let otherSelected = otherButton.isSelected
+            
+            if !willSelect && !otherSelected { return } // 최소 하나는 선택
+            
+            sender.isSelected = willSelect
+            updateStyle(for: sender)
+            
+            var tag: String? = nil
+            
+            if agricultureButton.isSelected && !livestockButton.isSelected {
+                tag = "AGRICULTURE"
+            } else if !agricultureButton.isSelected && livestockButton.isSelected {
+                tag = "LIVESTOCK"
+            } else {
+                tag = nil
+            }
+            
+            fetchRecruitList(tag: tag)
     }
-
+    
     private func updateStyle(for button: UIButton) {
         if button.isSelected {
             button.layer.borderColor = UIColor.primary.cgColor
@@ -138,7 +153,7 @@ final class RecruitListViewController: UIViewController {
             button.backgroundColor = .white
         }
     }
-
+    
     private func setInitialSelection() {
         agricultureButton.isSelected = true
         livestockButton.isSelected = false
@@ -153,11 +168,39 @@ final class RecruitListViewController: UIViewController {
             $0.register(RecruitListCell.self, forCellReuseIdentifier: RecruitListCell.identifier)
         }
     }
+
+    private func fetchRecruitList(tag: String?) {
+            var parameters = ["excludeClosed": "false"]
+            if let tag = tag {
+                parameters["tag"] = tag
+            }
+            
+            RecruitListService.shared.fetchRecruitList(parameters: parameters) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let responseModel):
+                    let data = responseModel.data
+                    self.recruitList = data
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                    
+                case .failure(let error):
+                    print("게시글 조회 실패: \(error.localizedDescription)")
+                }
+            }
+        }
 }
 
 extension RecruitListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 151
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.navigationController?.pushViewController(RecruitDetailViewController(), animated: false)
     }
 }
 
