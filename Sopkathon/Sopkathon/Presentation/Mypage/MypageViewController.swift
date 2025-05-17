@@ -31,12 +31,12 @@ final class MypageViewController: UIViewController {
     private func setStyle() {
         self.view.backgroundColor = .white
         
-        topBackgroundView.backgroundColor = UIColor(red: 0.971, green: 1, blue: 0.984, alpha: 1)
+        topBackgroundView.backgroundColor = .primaryPastel
         
         profileBackgroundView.do {
             $0.backgroundColor = UIColor(red: 0.964, green: 0.964, blue: 0.964, alpha: 1)
             $0.layer.cornerRadius = 45.5
-            $0.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1).cgColor
+            $0.layer.borderColor = UIColor.gray100.cgColor
             $0.layer.borderWidth = 1
             $0.clipsToBounds = true
         }
@@ -49,25 +49,25 @@ final class MypageViewController: UIViewController {
         nameLabel.do {
             $0.text = "이름"
             $0.textColor = .black
-            $0.font = .systemFont(ofSize: 15)
+            $0.font = .head_sb_16
         }
         
         phoneNumberLabel.do {
             $0.text = "010-3333-2222"
             $0.textColor = .black
-            $0.font = .systemFont(ofSize: 15)
+            $0.font = .body_rg_14
         }
         
         myActivityLabel.do {
             $0.text = "내가 참여한 활동"
             $0.textColor = .black
-            $0.font = .systemFont(ofSize: 20)
+            $0.font = .head_sb_20
         }
         
         suggestLabel.do {
             $0.text = "후기를 작성해보세요!"
-            $0.textColor = UIColor(red: 0.499, green: 0.499, blue: 0.499, alpha: 1)
-            $0.font = .systemFont(ofSize: 12)
+            $0.textColor = .gray500
+            $0.font = .body_rg_14
         }
     }
     
