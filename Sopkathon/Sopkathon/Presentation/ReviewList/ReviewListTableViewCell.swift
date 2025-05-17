@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Kingfisher
 import SnapKit
 import Then
 
@@ -108,6 +109,7 @@ extension ReviewListTableViewCell {
     func dataBind(_ item: ReviewListModel) {
         userID.text = "@\(item.memberId)"
         starRatingLabel.text = "\(item.star)"
+        activityImage.kf.setImage(with: URL(string: item.activityImageUrl!)!)
         date.text = formatDate(item.createDate)
         activityContent.text = item.content
     }
