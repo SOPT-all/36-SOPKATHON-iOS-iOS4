@@ -34,7 +34,7 @@ final class LogoHeader: UIView {
     
     private func setLayout() {
         logoImage.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(16)
+            $0.top.equalToSuperview()
             $0.width.height.equalTo(40)
             $0.leading.equalToSuperview().offset(16)
         }
