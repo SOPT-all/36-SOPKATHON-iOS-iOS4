@@ -92,7 +92,9 @@ final class RecruitDetailViewController: UIViewController {
         $0.textColor = .black
     }
     
-    private let buttonContainer = UIView()
+    private let buttonContainer = UIView().then {
+        $0.backgroundColor = .white
+    }
     
     // 신청하기 버튼
     
