@@ -28,7 +28,7 @@ final class ReviewListViewController: UIViewController {
         $0.contentMode = .scaleAspectFit
     }
     
-    private let nameLabel = UILabel().then {
+     let nameLabel = UILabel().then {
         $0.font = .head_sb_18
         $0.text = "업체 이름"
         $0.textColor = .black

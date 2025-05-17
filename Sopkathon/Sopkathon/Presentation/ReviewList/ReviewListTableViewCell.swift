@@ -109,7 +109,7 @@ extension ReviewListTableViewCell {
     func dataBind(_ item: ReviewListModel) {
         userID.text = "@\(item.memberId)"
         starRatingLabel.text = "\(item.star)"
-        activityImage.kf.setImage(with: URL(string: item.activityImageUrl!)!)
+        activityImage.image = UIImage(resource: .assetCattle)
         date.text = formatDate(item.createDate)
         activityContent.text = item.content
     }

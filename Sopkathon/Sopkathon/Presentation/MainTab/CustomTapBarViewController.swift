@@ -19,7 +19,7 @@ final class CustomTabBarVC: UITabBarController {
     }    
     
     func addTabItems() {
-        let homeVC = UINavigationController(rootViewController: ViewController())
+        let homeVC = UINavigationController(rootViewController: RecruitListViewController())
         let mypageVC = UINavigationController(rootViewController: MypageViewController())
         
         self.setViewControllers([homeVC, mypageVC], animated: false)

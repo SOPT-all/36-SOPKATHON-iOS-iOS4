@@ -86,7 +86,7 @@ final class RecruitDetailViewController: UIViewController {
     
     
     private let thumbnailImageView = UIImageView().then {
-        $0.backgroundColor = .gray
+        $0.image = UIImage(resource: .assetCattle)
     }
     
     // 설명글
@@ -109,6 +109,7 @@ final class RecruitDetailViewController: UIViewController {
         $0.layer.cornerRadius = 8
         $0.titleLabel?.font = .head_sb_16
         $0.setTitleColor(UIColor.primaryDark, for: .normal)
+        $0.addTarget(self, action: #selector(goToReviewButtonTapped), for: .touchUpInside)
     }
     
     private lazy var requestButton =  UIButton().then {
@@ -150,6 +151,7 @@ extension RecruitDetailViewController {
     
     func configure() {
         view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
     }
     
     // Add subview
@@ -194,7 +196,7 @@ extension RecruitDetailViewController {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.horizontalEdges.bottom.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-100)
+            $0.bottom.equalToSuperview().offset(-170)
         }
         
         contentView.snp.makeConstraints {
@@ -234,14 +236,14 @@ extension RecruitDetailViewController {
             $0.leading.equalToSuperview().inset(16)
             $0.height.equalTo(54)
             $0.width.equalTo(145)
-            $0.bottom.equalToSuperview().offset(-30)
+            $0.bottom.equalToSuperview().offset(-100)
         }
         
         requestButton.snp.makeConstraints {
             $0.leading.equalTo(goToReviewButton.snp.trailing).offset(10)
             $0.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(54)
-            $0.bottom.equalToSuperview().offset(-30)
+            $0.bottom.equalToSuperview().offset(-100)
         }
     }
     
@@ -270,6 +272,12 @@ extension RecruitDetailViewController {
                 print("실패")
             }
         }
+    }
+    
+    @objc private func goToReviewButtonTapped() {
+        let reivewListVC = ReviewListViewController(postId: self.postId)
+        reivewListVC.nameLabel.text = self.subject
+        navigationController?.pushViewController(reivewListVC, animated: true)
     }
 }
 

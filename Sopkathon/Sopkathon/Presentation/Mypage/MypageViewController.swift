@@ -16,7 +16,7 @@ final class MypageViewController: UIViewController {
     private let topBackgroundView = UIView()
     private let profileBackgroundView = UIView()
     private let profileImageView = UIImageView()
-    private let nameLabel = UILabel()
+     let nameLabel = UILabel()
     private let phoneNumberLabel = UILabel()
     private var myActivityLabel = UILabel()
     private var suggestLabel = UILabel()
