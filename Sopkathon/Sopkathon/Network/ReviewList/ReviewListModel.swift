@@ -17,17 +17,6 @@ struct ReviewListModel: Codable {
     let memberId: Int
     let star: Int
     let createDate: String
-//    let activityImg: UIImage
+    let activityImageUrl: String?
     let content: String?
 }
-
-//extension ReviewListModel {
-//    static func dummy() -> [ReviewListModel] {
-//        return[
-//            ReviewListModel(userId: 1, starRating: 5, date: "5월 18일", content: "후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기"),
-//            ReviewListModel(userId: 1, starRating: 5, date: "5월 18일", content: "후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기"),
-//            ReviewListModel(userId: 1, starRating: 5, date: "5월 18일", content: "후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기"),
-//            ReviewListModel(userId: 1, starRating: 5, date: "5월 18일",content: "후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기")
-//        ]
-//    }
-//}
