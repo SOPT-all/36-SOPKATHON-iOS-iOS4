@@ -20,12 +20,12 @@ final class CustomTabBarVC: UITabBarController {
     
     func addTabItems() {
         let homeVC = UINavigationController(rootViewController: ViewController())
-        let reviewVC = UINavigationController(rootViewController: ReviewListViewController(postId: "1"))
+        let mypageVC = UINavigationController(rootViewController: MypageViewController())
         
-        self.setViewControllers([homeVC, reviewVC], animated: false)
+        self.setViewControllers([homeVC, mypageVC], animated: false)
         self.modalPresentationStyle = .fullScreen
-        // TODO: 여기 purple를 Main으로 바꿔주세요
-        self.tabBar.tintColor = .purple
+
+        self.tabBar.tintColor = .primary
         self.tabBar.backgroundColor = .white
         
         guard let items = self.tabBar.items else { return }
