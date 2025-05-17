@@ -1,18 +1,18 @@
 //
-//  RecruitDetailAPI.swift
+//  RecruitAPI.swift
 //  Sopkathon
 //
-//  Created by 이세민 on 5/17/25.
+//  Created by 권석기 on 5/18/25.
 //
 
 import Foundation
 
 import Moya
 
-enum RecruitDetailAPI: TargetType {
+enum RecruitRequestAPI: TargetType {
     
     // 요청 케이스
-    case fetchRecruitDetail(postId: String)
+    case requstRecruit(postId: String)
         
     var baseURL: URL {
         return URL(string: "http://52.79.208.129.nip.io")!
@@ -20,28 +20,28 @@ enum RecruitDetailAPI: TargetType {
         
     var path: String {
         switch self {
-        case let .fetchRecruitDetail(postId):
-            return "/api/activity-posts/\(postId)"
+        case let .requstRecruit(postId):
+            return "/api/activity-posts/\(postId)/apply"
         }
     }
         
     var method: Moya.Method {
         switch self {
-        case .fetchRecruitDetail:
-            return .get
+        case .requstRecruit:
+            return .post
         }
     }
         
     var task: Moya.Task {
         switch self {
-        case .fetchRecruitDetail:
-            return .requestPlain
+        case .requstRecruit:
+            return .requestParameters(parameters: ["memberId": "2"], encoding: URLEncoding.queryString)
         }
     }
         
     var headers: [String : String]? {
         switch self {
-        case .fetchRecruitDetail:
+        case .requstRecruit:
             return ["Content-type": "application/json",
                     "Authorization": "Bearer "]
         default:

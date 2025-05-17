@@ -14,20 +14,9 @@ struct ReviewListWrapper: Codable {
     let data: [ReviewListModel]
 }
 struct ReviewListModel: Codable {
-    let userId: Int
-    let starRating: Int
-    let date: String
-//    let activityImg: UIImage
-    let content: String
-}
-
-extension ReviewListModel {
-    static func dummy() -> [ReviewListModel] {
-        return[
-            ReviewListModel(userId: 1, starRating: 5, date: "5월 18일", content: "후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기"),
-            ReviewListModel(userId: 1, starRating: 5, date: "5월 18일", content: "후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기"),
-            ReviewListModel(userId: 1, starRating: 5, date: "5월 18일", content: "후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기"),
-            ReviewListModel(userId: 1, starRating: 5, date: "5월 18일",content: "후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기후기")
-        ]
-    }
+    let memberId: Int
+    let star: Int
+    let createDate: String
+    let activityImageUrl: String?
+    let content: String?
 }

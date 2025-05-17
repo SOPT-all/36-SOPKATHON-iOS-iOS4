@@ -13,14 +13,13 @@ enum MypageAPI: TargetType {
     case getMypage(id: Int)
     
     var baseURL: URL {
-        // 실제 서버 URL로 변경하기
-        return URL(string: "https://api.domain.com")!
+        return URL(string: "http://52.79.208.129.nip.io")!
     }
     
     var path: String {
         switch self {
         case .getMypage(let id):
-            return " /api/members/(memberId)/activities"
+            return "/api/members/\(id)/activities"
         }
     }
     

@@ -12,6 +12,10 @@ extension UIFont {
         return UIFont(name: "Pretendard-SemiBold", size: 20)!
     }
     
+    class var head_sb_18: UIFont {
+        return UIFont(name: "Pretendard-SemiBold", size: 18)!
+    }
+    
     class var head_sb_16: UIFont {
         return UIFont(name: "Pretendard-SemiBold", size: 16)!
     }
@@ -46,5 +50,9 @@ extension UIFont {
     
     class var cap_md_20: UIFont {
         return UIFont(name: "Pretendard-Medium", size: 20)!
+    }
+    
+    class var cap_rg_12: UIFont {
+        return UIFont(name: "Pretendard-Regular", size: 12)!
     }
 }
