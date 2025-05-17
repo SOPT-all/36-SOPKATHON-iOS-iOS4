@@ -61,7 +61,11 @@
 
 
 ## 시연영상
-추가 예정
+
+
+https://github.com/user-attachments/assets/27f85bac-69aa-4b18-92ff-d3d2ed6b4f1a
+
+
 
 <br>
 
@@ -72,4 +76,5 @@
 
 
 ### After
+<img src="https://github.com/user-attachments/assets/7e8a947f-a59f-41fc-91ff-b26ab3647f9c" width="500"/>
 
