@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "myPageIcon.png",
+      "filename" : "Frame 28.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ic_mypage@2x.png",
+      "filename" : "Frame 28@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ic_mypage@3x.png",
+      "filename" : "Frame 28@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
