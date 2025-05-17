@@ -18,7 +18,9 @@ final class LoginViewController: UIViewController {
     private lazy var phoneNumberTextField = createTextField(placeholder: "전화번호")
     private lazy var passwordTextField = createTextField(placeholder: "패스워드")
     
-    private lazy var loginButton = createButton(title: "로그인")
+    private lazy var loginButton = createButton(title: "로그인").then {
+        $0.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+    }
     
     private func createTypeButton(title: String) -> UIButton {
         return UIButton().then {
@@ -110,5 +112,10 @@ final class LoginViewController: UIViewController {
             $0.width.equalTo(300)
             $0.height.equalTo(50)
         }
+    }
+    
+    @objc func loginButtonTapped() {
+        let tabBarVC = CustomTabBarVC()
+        navigationController?.pushViewController(tabBarVC, animated: true)
     }
 }
