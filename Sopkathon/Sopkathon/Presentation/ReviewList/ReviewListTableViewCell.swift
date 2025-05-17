@@ -95,8 +95,6 @@ extension ReviewListTableViewCell {
         userID.text = "\(item.userId)"
         starRatingLabel.text = "\(item.starRating)"
         date.text = item.date
-        activityTitle.text = item.activityTitle
-        activityPlace.text = item.activityPlace
         activityContent.text = item.content
     }
 }
