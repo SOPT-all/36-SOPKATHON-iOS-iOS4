@@ -17,17 +17,12 @@ final class LoginViewController: UIViewController {
     private lazy var studentButton = createTypeButton(title: "대학생")
     private lazy var unionButton = createTypeButton(title: "농축업 종사자")
     
-<<<<<<< HEAD
     private lazy var idTextField = createTextField(placeholder: "아이디를 입력해주세요")
     private lazy var passwordTextField = createTextField(placeholder: "비밀번호를 입력해주세요")
     
     private lazy var goToRegisterButton = UIButton()
     private lazy var loginButton = UIButton()
-=======
-    private lazy var loginButton = createButton(title: "로그인").then {
-        $0.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
-    }
->>>>>>> main
+    
     
     private func createTypeButton(title: String) -> UIButton {
         return UIButton().then {
@@ -164,11 +159,11 @@ final class LoginViewController: UIViewController {
         }
     }
     
-<<<<<<< HEAD
     private func setAddTarget() {
         studentButton.addTarget(self, action: #selector(studentButtonTapped), for: .touchUpInside)
         unionButton.addTarget(self, action: #selector(unionButtonTapped), for: .touchUpInside)
         goToRegisterButton.addTarget(self, action: #selector(goToRegisterButtonTapped), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
     }
     
     private func updateButtonSelection(selectedButton: UIButton) {
@@ -201,10 +196,10 @@ final class LoginViewController: UIViewController {
     @objc private func goToRegisterButtonTapped() {
         let registerVC = RegisterViewController()
         navigationController?.pushViewController(registerVC, animated: true)
-=======
+    }
+    
     @objc func loginButtonTapped() {
         let tabBarVC = CustomTabBarVC()
         navigationController?.pushViewController(tabBarVC, animated: true)
->>>>>>> main
     }
 }
