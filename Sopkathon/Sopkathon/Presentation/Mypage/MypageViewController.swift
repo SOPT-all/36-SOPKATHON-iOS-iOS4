@@ -11,6 +11,8 @@ import Then
 
 final class MypageViewController: UIViewController {
     
+    private let logoHeader = LogoHeader()
+    
     private let topBackgroundView = UIView()
     private let profileBackgroundView = UIView()
     private let profileImageView = UIImageView()
@@ -19,17 +21,19 @@ final class MypageViewController: UIViewController {
     private var myActivityLabel = UILabel()
     private var suggestLabel = UILabel()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setStyle()
         setUI()
         setLayout()
-        // fetchMypageData()
+        fetchMypageData()
     }
     
     private func setStyle() {
         self.view.backgroundColor = .white
+        navigationController?.isNavigationBarHidden = true
         
         topBackgroundView.backgroundColor = .primaryPastel
         
@@ -72,12 +76,18 @@ final class MypageViewController: UIViewController {
     }
     
     private func setUI() {
-        view.addSubviews(topBackgroundView, myActivityLabel, suggestLabel)
+        view.addSubviews(topBackgroundView, logoHeader, myActivityLabel, suggestLabel)
         topBackgroundView.addSubviews(profileBackgroundView, nameLabel, phoneNumberLabel)
         profileBackgroundView.addSubview(profileImageView)
     }
     
     private func setLayout() {
+        logoHeader.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(16)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(60)
+        }
+        
         topBackgroundView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
@@ -85,7 +95,7 @@ final class MypageViewController: UIViewController {
         }
         
         profileBackgroundView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(55)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(65)
             $0.centerX.equalToSuperview()
             $0.size.equalTo(91)
         }
@@ -116,23 +126,42 @@ final class MypageViewController: UIViewController {
         }
     }
     
-    /*
     private func fetchMypageData() {
-        let userId = 5
-        
-        MypageService.shared.fetchMember(id: userId) { [weak self] result in
+        let userId = 2
+        MypageService.shared.getMypage(id: userId) { [weak self] result in
             guard let self = self else { return }
             
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let member):
-                    self.nameLabel.text = member.username
-                    self.phoneNumberLabel.text = member.telephone
-                case .failure(let error):
-                    print("마이페이지 조회 실패: \(error.localizedDescription)")
+            switch result {
+            case .success(let responseModel):
+                if let firstActivity = responseModel.data.participationCompleteActivities.first {
+                        self.nameLabel.text = "\(firstActivity.userId)번 user"
+                        self.phoneNumberLabel.text = self.formatPhoneNumber(firstActivity.telephone)
+                } else {
+                    print("참여 완료 활동이 없습니다.")
                 }
+                
+            case .failure(let error):
+                print("마이페이지 조회 실패: \(error.localizedDescription)")
             }
         }
     }
-    */
+    
+    private func formatPhoneNumber(_ phoneNumber: String) -> String {
+        let digits = phoneNumber.filter { $0.isNumber }
+        
+        switch digits.count {
+        case 10:
+            let start = digits.prefix(3)
+            let middle = digits.dropFirst(3).prefix(3)
+            let end = digits.suffix(4)
+            return "\(start)-\(middle)-\(end)"
+        case 11:
+            let start = digits.prefix(3)
+            let middle = digits.dropFirst(3).prefix(4)
+            let end = digits.suffix(4)
+            return "\(start)-\(middle)-\(end)"
+        default:
+            return phoneNumber
+        }
+    }
 }
