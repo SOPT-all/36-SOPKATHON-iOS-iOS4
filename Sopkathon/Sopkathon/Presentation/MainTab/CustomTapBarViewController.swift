@@ -20,7 +20,7 @@ final class CustomTabBarVC: UITabBarController {
     
     func addTabItems() {
         let homeVC = UINavigationController(rootViewController: ViewController())
-        let reviewVC = UINavigationController(rootViewController: ViewController())
+        let reviewVC = UINavigationController(rootViewController: ReviewListViewController(postId: "1"))
         let myPageVC = UINavigationController(rootViewController: ViewController())
         
         homeVC.title = "메인"
