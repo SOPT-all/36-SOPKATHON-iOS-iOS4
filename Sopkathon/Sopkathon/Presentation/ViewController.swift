@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     private func setLayout() {
         view.addSubview(requestButton)
         requestButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
+            $0.center.equalToSuperview()
         }
     }
     
@@ -38,7 +38,6 @@ class ViewController: UIViewController {
         Task {
             do {
                 let result = try await exampleService.exmapleRequest()
-                print(result)
             } catch {
                 print(error.localizedDescription)
             }

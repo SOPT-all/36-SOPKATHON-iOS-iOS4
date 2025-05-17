@@ -31,8 +31,9 @@ import Moya
 
 final class ExampleService {        
     
-    // Provider에 사용하려는 API를 제네릭으로 넘겨주세요
-    private let provider = MoyaProvider<ExampleAPI>()
+    // 1. Provider에 사용하려는 API를 제네릭으로 넘겨주세요
+    // 2. plugins: [MoyaLoggingPlugin()] 은 옵셥입니다. 사용을 원하지 않으시면 비워주세요!
+    private let provider = MoyaProvider<ExampleAPI>(plugins:[MoyaLoggingPlugin()])
     
     func exmapleRequest() async throws -> [Post] {
         do {
