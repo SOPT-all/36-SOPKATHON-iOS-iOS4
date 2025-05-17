@@ -16,8 +16,7 @@ final class CustomTabBarVC: UITabBarController {
     override func loadView() {
         super.loadView()
         addTabItems()
-    }
-    
+    }    
     
     func addTabItems() {
         let homeVC = UINavigationController(rootViewController: ViewController())
